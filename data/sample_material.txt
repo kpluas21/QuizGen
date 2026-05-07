@@ -1,0 +1,15 @@
+The Mitochondria: Powerhouse of the Cell
+
+Mitochondria are membrane-bound organelles found in the cytoplasm of eukaryotic cells. They are often referred to as the "powerhouse of the cell" because they generate most of the cell's supply of adenosine triphosphate (ATP), which is used as a source of chemical energy.
+
+Structure
+Mitochondria have a distinctive double-membrane structure. The outer membrane is smooth and acts as a barrier between the mitochondrion and the rest of the cell. The inner membrane is highly folded into structures called cristae, which significantly increase its surface area. The space between the two membranes is called the intermembrane space, and the space enclosed by the inner membrane is the mitochondrial matrix.
+
+Function
+The primary function of mitochondria is to produce ATP through a process called cellular respiration. This occurs in two main stages: the citric acid cycle (also known as the Krebs cycle) and oxidative phosphorylation. During glycolysis in the cytoplasm, glucose is broken down into pyruvate, which is then transported into the mitochondrial matrix. There, it enters the citric acid cycle, producing electron carriers (NADH and FADH2). These carriers donate electrons to the electron transport chain located on the inner mitochondrial membrane, which drives the synthesis of ATP.
+
+Mitochondria and Disease
+Mutations in mitochondrial DNA (mtDNA) can cause a range of diseases, collectively called mitochondrial diseases. Because mitochondria are inherited maternally, these conditions follow maternal inheritance patterns. Examples include Leigh syndrome, MELAS (mitochondrial encephalomyopathy, lactic acidosis, and stroke-like episodes), and mitochondrial myopathy.
+
+Evolution
+The endosymbiotic theory proposes that mitochondria were once free-living bacteria that were engulfed by an ancestral eukaryotic cell. Evidence for this includes the fact that mitochondria have their own circular DNA, reproduce by binary fission, and have ribosomes similar to those found in bacteria.

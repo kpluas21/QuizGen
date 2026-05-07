@@ -220,7 +220,7 @@ def _show_results_screen():
     gradable = [i for i, q in enumerate(quiz) if q["type"] != "short_answer"]
     correct = sum(
         1 for i in gradable
-        if _normalise(answers.get(i, "")) == _normalise(quiz[i]["correct_answer"])
+        if _answers_match(answers.get(i, ""), quiz[i]["correct_answer"], quiz[i]["type"])
     )
     scored = len(gradable)
 
@@ -246,7 +246,7 @@ def _show_results_screen():
 
         if q["type"] == "short_answer":
             icon = "📝"
-        elif _normalise(user_ans) == _normalise(correct_ans):
+        elif _answers_match(user_ans, correct_ans, q["type"]):
             icon = "✅"
         else:
             icon = "❌"
@@ -312,8 +312,19 @@ def _show_results_screen():
 
 
 def _normalise(s: str) -> str:
-    """Strip and lowercase for lenient answer comparison."""
     return s.strip().lower() if s else ""
+
+
+def _answers_match(user_ans: str, correct_ans: str, q_type: str) -> bool:
+    user_norm = _normalise(user_ans)
+    correct_norm = _normalise(correct_ans)
+    if user_norm == correct_norm:
+        return True
+    if q_type == "multiple_choice":
+        # Radio returns "B) Some text"; correct_answer may be just "B" or "b"
+        user_letter = user_norm.split(")")[0].strip()
+        return user_letter == correct_norm
+    return False
 
 
 # ---------------------------------------------------------------------------

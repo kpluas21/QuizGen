@@ -87,13 +87,20 @@ def validate_question(question: dict) -> bool:
     return True
 
 
-def generate_question(chunk: str, question_type: str, difficulty: str = "medium") -> dict:
+def generate_question(
+    chunk: str,
+    question_type: str,
+    difficulty: str = "medium",
+    previous_questions: list[str] | None = None,
+) -> dict:
     """Generate a single quiz question from a text chunk using Claude.
 
     Args:
         chunk: The study material excerpt to base the question on.
         question_type: One of "multiple_choice", "true_false", "short_answer".
         difficulty: One of "easy", "medium", "hard".
+        previous_questions: Questions already generated; Claude will avoid
+                            asking about the same concepts.
 
     Returns:
         A validated question dict matching the quiz schema.
@@ -116,11 +123,21 @@ def generate_question(chunk: str, question_type: str, difficulty: str = "medium"
         f"accurate, clear, and at {difficulty} difficulty."
     )
 
+    avoid_section = ""
+    if previous_questions:
+        listed = "\n".join(f"- {q}" for q in previous_questions)
+        avoid_section = (
+            f"\n\nThe following questions have already been generated. "
+            f"Do NOT ask about the same concepts or facts — choose a different "
+            f"aspect of the material:\n{listed}"
+        )
+
     user = (
         f"Generate one {difficulty} {question_type.replace('_', ' ')} question "
         f"from this study material:\n\n{chunk}\n\n"
         f"{_TYPE_INSTRUCTIONS[question_type]}\n\n"
-        "Identify the specific topic or concept the question tests."
+        f"Identify the specific topic or concept the question tests."
+        f"{avoid_section}"
     )
 
     def _call() -> dict:
@@ -202,7 +219,8 @@ def generate_quiz(
 
     for i, (chunk, qtype) in enumerate(zip(chunk_seq, type_seq)):
         try:
-            quiz.append(generate_question(chunk, qtype, difficulty))
+            previous = [q["question"] for q in quiz]
+            quiz.append(generate_question(chunk, qtype, difficulty, previous_questions=previous))
         except (ValueError, anthropic.APIError) as exc:
             errors.append(f"Q{i + 1}: {exc}")
 
